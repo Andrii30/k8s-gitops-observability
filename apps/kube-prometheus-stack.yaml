@@ -1,0 +1,33 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kube-prometheus-stack
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://prometheus-community.github.io/helm-charts
+    chart: kube-prometheus-stack
+    targetRevision: "65.5.1"
+    helm:
+      valuesObject:
+        grafana:
+          adminPassword: "ChangeMe123!"
+          service:
+            type: ClusterIP
+        prometheus:
+          prometheusSpec:
+            resources:
+              requests: { cpu: 200m, memory: 512Mi }
+              limits: { cpu: 500m, memory: 1Gi }
+        alertmanager:
+          enabled: false
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: observability
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
