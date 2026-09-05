@@ -12,6 +12,9 @@ spec:
     helm:
       valuesObject:
         loki:
+          # Prometheus (from kube-prometheus-stack) is already the default
+          # datasource — two defaults crash Grafana on a cold start.
+          isDefault: false
           persistence:
             enabled: false
         promtail:
