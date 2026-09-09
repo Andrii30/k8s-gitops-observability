@@ -17,8 +17,14 @@ spec:
           isDefault: false
           persistence:
             enabled: false
+          resources:
+            requests: { cpu: 100m, memory: 128Mi }
+            limits: { cpu: 300m, memory: 256Mi }
         promtail:
           enabled: true
+          resources:
+            requests: { cpu: 30m, memory: 64Mi }
+            limits: { cpu: 100m, memory: 128Mi }
         grafana:
           enabled: false
   destination:
