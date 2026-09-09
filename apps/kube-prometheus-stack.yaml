@@ -15,11 +15,34 @@ spec:
           adminPassword: "ChangeMe123!"
           service:
             type: ClusterIP
+          resources:
+            requests: { cpu: 50m, memory: 128Mi }
+            limits: { cpu: 300m, memory: 256Mi }
+          sidecar:
+            resources:
+              requests: { cpu: 10m, memory: 32Mi }
+              limits: { cpu: 50m, memory: 64Mi }
         prometheus:
           prometheusSpec:
             resources:
               requests: { cpu: 200m, memory: 512Mi }
               limits: { cpu: 500m, memory: 1Gi }
+        prometheusOperator:
+          resources:
+            requests: { cpu: 50m, memory: 64Mi }
+            limits: { cpu: 200m, memory: 192Mi }
+          prometheusConfigReloader:
+            resources:
+              requests: { cpu: 10m, memory: 32Mi }
+              limits: { cpu: 50m, memory: 64Mi }
+        kube-state-metrics:
+          resources:
+            requests: { cpu: 20m, memory: 32Mi }
+            limits: { cpu: 100m, memory: 128Mi }
+        prometheus-node-exporter:
+          resources:
+            requests: { cpu: 10m, memory: 24Mi }
+            limits: { cpu: 50m, memory: 64Mi }
         alertmanager:
           enabled: false
   destination:
